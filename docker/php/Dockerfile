@@ -7,13 +7,15 @@ RUN apk update && apk add \
     curl \
     icu-dev \
     libxml2-dev \
+    sqlite-dev \
     $PHPIZE_DEPS \
     && rm -rf /var/cache/apk/*
 
 # PHP拡張機能のインストール (CI4でよく使われるもの)
 RUN docker-php-ext-install pdo pdo_mysql opcache \
     && docker-php-ext-configure intl \
-    && docker-php-ext-install intl
+    && docker-php-ext-install intl \
+    && docker-php-ext-install pdo_sqlite
 
 # Composerのインストール
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

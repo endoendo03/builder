@@ -1,0 +1,367 @@
+/* --- 共通・ベース --- */
+body {
+    margin: 0; padding: 0;
+    background-color: #000;
+    color: #fff;
+    font-family: sans-serif;
+    line-height: 1.6;
+    background-image: url('/images/bg.png'); /* ここに背景画像のパスを入れる */
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+}
+
+/* --- レイアウト（2カラム & レスポンシブ） --- */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap; /* スマホで折り返す設定 */
+    gap: 20px;
+    padding: 10px;
+}
+
+header {
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 2px solid #d32f2f;
+}
+.header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.nav-menu li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0 10px;
+    font-size: 12px;
+    font-weight: bold;
+}
+.nav-menu li a:hover { color: #ff0; }
+
+main {
+    flex: 1;
+    min-width: 300px; /* スマホ時の最小幅 */
+}
+
+.sidebar-right {
+    width: 220px;
+}
+
+/* スマホ対応：992px以下でサイドバーを下に落とす */
+@media (max-width: 992px) {
+    .container { flex-direction: column; }
+    .sidebar-right { width: 100%; order: 2; } /* 本文を先に読ませる */
+    main { order: 1; }
+}
+
+/* --- 写メ日記グリッド --- */
+.diary-grid {
+    display: grid;
+    /* 画面幅に合わせてカラム数を自動調整 (4列 → 3列 → 2列) */
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+}
+
+/* --- クーポンカード --- */
+.coupon-card {
+    background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+    color: #000;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+/* --- モーダル共通 --- */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 10000; display: none; justify-content: center; align-items: center;
+}
+.modal-content {
+    background: #fff; color: #333; width: 90%; max-width: 450px;
+    padding: 30px; border-radius: 5px; box-sizing: border-box;
+}
+
+footer {
+    background: #000;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 12px;
+    margin-top: 50px;
+}
+
+/* デザイン画像を再現した白モーダル */
+.modal-content.login-style {
+    background: #fff; color: #333; width: 90%; max-width: 450px;
+    padding: 40px; border-radius: 5px; text-align: center;
+}
+
+.modal-header-simple h3 { font-size: 22px; margin-bottom: 30px; font-weight: bold; }
+
+/* 入力欄：画像のような細いグレー枠 */
+.form-input-light {
+    width: 100%; padding: 12px; margin-bottom: 15px;
+    border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;
+}
+
+/* ログインボタン：画像のようなチャコールグレー */
+.submit-btn.dark {
+    width: 100%; padding: 15px; background: #333; color: #fff;
+    border: none; border-radius: 4px; font-weight: bold; cursor: pointer;
+    font-size: 16px; margin-top: 10px;
+}
+
+/* パスワード忘れ等のリンク */
+.modal-links { margin: 15px 0; font-size: 13px; }
+.modal-links a { color: #888; text-decoration: underline; }
+
+.modal-hr { border: 0; border-top: 1px solid #eee; margin: 30px 0; }
+
+/* 新規会員登録ボタン：白背景に枠線 */
+.switch-btn {
+    width: 100%; padding: 12px; background: #fff; color: #333;
+    border: 1px solid #333; border-radius: 4px; font-weight: bold; cursor: pointer;
+}
+/* --- モーダル全体（暗転背景） --- */
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.9); /* 濃いめの暗転 */
+    display: none; /* 初期状態は非表示 */
+    justify-content: center;
+    align-items: center;
+    z-index: 99999; /* 最前面に */
+}
+
+/* --- モーダルの箱 --- */
+.custom-modal-content {
+    background: #1a1a1a;
+    width: 90%;
+    max-width: 400px;
+    border: 2px solid #d32f2f; /* 赤い縁取り */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(211, 47, 47, 0.5);
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- ヘッダー --- */
+.custom-modal-header {
+    background: #d32f2f;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.custom-modal-header h3 {
+    margin: 0;
+    color: #fff;
+    font-size: 18px;
+}
+.custom-close-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 28px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+/* --- フォーム内部 --- */
+.custom-modal-body {
+    padding: 20px;
+}
+.custom-form-group {
+    margin-bottom: 15px;
+}
+.custom-form-group label {
+    display: block;
+    color: #aaa;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+.custom-form-group input {
+    width: 100%;
+    padding: 12px;
+    background: #000;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 4px;
+    box-sizing: border-box; /* 幅がはみ出さないように */
+}
+
+/* --- 登録ボタン --- */
+.custom-submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: #d32f2f;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.2s;
+}
+.custom-submit-btn:hover {
+    background: #b71c1c;
+}
+
+/* --- ログイン専用：白モーダル --- */
+.login-style-white {
+    background: #fff !important; /* 背景を白に強制 */
+    color: #333 !important;
+    max-width: 420px;
+    padding: 20px 10px;
+}
+
+.custom-modal-header-light {
+    padding: 20px;
+    text-align: center;
+}
+
+.custom-modal-header-light h3 {
+    margin: 0;
+    color: #333;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* 入力欄（白背景用） */
+.input-light {
+    width: 100%;
+    padding: 12px;
+    background: #fff !important;
+    border: 1px solid #ddd !important;
+    color: #333 !important;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* ログインボタン（濃いグレー） */
+.custom-submit-btn-dark {
+    width: 100%;
+    padding: 15px;
+    background: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.modal-sub-links {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.modal-sub-links a {
+    color: #888;
+    font-size: 13px;
+    text-decoration: underline;
+}
+
+.modal-divider {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 20px 0;
+}
+
+/* 新規登録へ切り替えるボタン（枠線のみ） */
+.custom-switch-btn {
+    width: 100%;
+    padding: 12px;
+    background: #fff;
+    color: #333;
+    border: 1px solid #333;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+/* 右カラム：赤いタイトルの帯 */
+.sidebar-title-red {
+    background: #ff0000; /* デザイン通りの鮮やかな赤 */
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    border-radius: 2px;
+}
+
+/* 店舗情報のテキスト */
+.sidebar-info-box {
+    margin-bottom: 25px;
+    background: #000;
+}
+.sidebar-content {
+    padding: 10px;
+    font-size: 12px;
+    line-height: 1.6;
+}
+.tel-number {
+    color: #ffff00; /* 電話番号を目立たせる黄色 */
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* 系列店バナーリスト */
+.shop-banner-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* バナー同士の隙間 */
+}
+
+.shop-banner-item {
+    display: block;
+    border: 1px solid #ff0000; /* バナーの周りの赤い縁取り */
+    line-height: 0;
+    transition: opacity 0.2s;
+}
+
+.shop-banner-item:hover {
+    opacity: 0.8;
+}
+
+.shop-banner-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* スマホ対応 */
+@media (max-width: 992px) {
+    .sidebar-right {
+        padding: 15px;
+    }
+    .shop-banner-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* スマホではバナーを2列に並べる（押しやすさ重視） */
+        gap: 10px;
+    }
+}
