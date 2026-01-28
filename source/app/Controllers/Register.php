@@ -16,7 +16,7 @@ class Register extends BaseController
         $model = new \App\Models\UserModel();
         
         $data = [
-            'name'     => $this->request->getPost('name'),
+            'username'     => $this->request->getPost('name'),
             'email'    => $this->request->getPost('email'),
             'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
             'phone'    => $this->request->getPost('phone'),

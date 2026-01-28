@@ -1,6 +1,14 @@
 <?= $this->extend('layouts/front_master') ?>
 
 <?= $this->section('content') ?>
+<style>
+.cast-section-title {
+        background: #d32f2f;
+        padding: 8px 15px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+</style>
 <div class="cast-section-title">キャスト一覧</div>
 
 <div class="cast-grid">
@@ -8,7 +16,7 @@
         <?php foreach ($casts as $cast): ?>
         <a href="<?= base_url('cast/detail/' . $cast['id']) ?>" class="cast-card">
             <div class="cast-img">
-                <img src="<?= $cast['image_url'] ?: '/images/common/no_image.jpg' ?>" alt="<?= esc($cast['name']) ?>">
+                <img src="<?= $cast['thumbnail_url'] ?: '/images/common/no_image.jpg' ?>" alt="<?= esc($cast['name']) ?>">
                 
                 <?php if (!empty($cast['is_new'])): ?>
                     <span class="cast-label new">NEW</span>

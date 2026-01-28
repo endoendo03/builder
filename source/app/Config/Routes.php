@@ -19,6 +19,7 @@ $routes->get('coupon/', 'Coupon::index', ['as' => 'Coupon::index']);
 $routes->get('diary/', 'Diary::index', ['as' => 'Diary::index']);
 $routes->get('diary/detail/(:num)', 'Diary::detail/$1', ['as' => 'Diary::detail']);
 
+$routes->post('register/store/', 'Register::store', ['as' => 'Register::store']);
 
 // フロント用アンケートURL
 $routes->get('survey/(:num)', 'Survey::show/$1', ['as' => 'Survey::show']);
@@ -33,7 +34,13 @@ $routes->get('admin/logout', 'Admin\Login::logout', ['as' => 'Admin\Login::logou
 
 $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'adminAuth'], function($routes)
 {
-    $routes->get('/', 'Dashboard::index'); 
+    $routes->get('/', 'Dashboard::index');
+
+    $routes->get('banner/top_index', 'Banner::top_index', ['as' => 'Admin\Banner::top_index']);
+    $routes->get('banner/top_new', 'Banner::top_new', ['as' => 'Admin\Banner::top_new']);
+    $routes->post('banner/top_store', 'Banner::top_store', ['as' => 'Admin\Banner::top_store']);
+    $routes->get('banner/top_delete/(:num)', 'Banner::top_delete/$1', ['as' => 'Admin\Banner::top_delete']);
+
     $routes->get('users', 'Users::index', ['as' => 'Admin\Users::index']);
     $routes->get('users/edit/(:num)', 'Users::edit/$1', ['as' => 'Admin\Users::edit']);
     $routes->post('users/update/(:num)', 'Users::update/$1', ['as' => 'Admin\Users::update']);

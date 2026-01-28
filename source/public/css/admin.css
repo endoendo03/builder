@@ -85,3 +85,74 @@ a {
     border-bottom: 2px solid #ecf0f1;
     padding-bottom: 10px;
 }
+
+.admin-table { width: 100%; border-collapse: collapse; background: #222; color: #fff; }
+.admin-table th, .admin-table td { padding: 12px; border: 1px solid #444; vertical-align: middle; }
+.admin-table th { background: #333; text-align: left; }
+.btn-add { background: #d32f2f; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: bold; }
+.btn-delete { color: #ff5252; text-decoration: underline; font-size: 14px; }
+.info-cell { font-size: 13px; line-height: 1.6; }
+.alert { padding: 10px; margin-bottom: 15px; border-radius: 4px; }
+.alert-success { background: #2e7d32; color: #fff; }
+.alert-danger { background: #c62828; color: #fff; }
+.text-center { text-align: center; }
+
+.admin-form { 
+    background: #1a1a1a; /* 漆黒より少し明るい */
+    padding: 30px; 
+    border-radius: 8px; 
+    max-width: 700px; 
+    border: 1px solid #333;
+    color: #ffffff; /* 文字色を強制的に白に */
+}
+
+/* 各項目のタイトル（ラベル）を強調 */
+.form-group { margin-bottom: 20px; }
+.form-group label { 
+    display: block; 
+    margin-bottom: 8px; 
+    font-weight: bold; 
+    color: #ff4444; /* ラベルを赤っぽくして目立たせる */
+    font-size: 16px;
+}
+
+/* 入力欄の背景と文字色 */
+.form-group input[type="text"], 
+.form-group input[type="number"],
+.form-group input[type="file"] { 
+    width: 100%; 
+    padding: 10px; 
+    border: 1px solid #444; 
+    background: #2a2a2a; /* 入力欄を背景より少し明るく */
+    color: #ffffff; /* 入力した文字が見えるように白に */
+    border-radius: 4px;
+}
+
+/* フォーカスが当たった時に枠を光らせる（操作感UP） */
+.form-group input:focus {
+    outline: none;
+    border-color: #ff4444;
+    box-shadow: 0 0 5px rgba(255, 68, 68, 0.5);
+}
+
+.btn-submit { 
+    background: #d32f2f; 
+    color: #fff; 
+    padding: 12px 30px; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.btn-submit:hover { background: #b71c1c; }
+
+.btn-cancel { 
+    color: #999; 
+    margin-left: 20px; 
+    text-decoration: none; 
+    font-size: 14px;
+}
+
+small { color: #888; display: block; margin-top: 5px; }

@@ -58,7 +58,7 @@
                     <script>
                     function showQR(url, title) {
                         // フルパスURLを取得
-                        const fullUrl = window.location.origin + '/' + url;
+                        const fullUrl = url;
                         const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(fullUrl)}`;
                         
                         document.getElementById('qrTitle').innerText = title;

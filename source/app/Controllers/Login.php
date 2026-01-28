@@ -5,10 +5,6 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class Login extends BaseController
-{
-    <?php namespace App\Controllers;
-
 use App\Models\UserModel;
 
 class Login extends BaseController
@@ -30,7 +26,7 @@ class Login extends BaseController
                 // セッションにユーザー情報を保存
                 $session->set([
                     'user_id'    => $user['id'],
-                    'user_name'  => $user['name'],
+                    'user_name'  => $user['username'],
                     'is_user_logged_in' => true,
                 ]);
 

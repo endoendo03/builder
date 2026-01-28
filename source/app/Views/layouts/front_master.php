@@ -41,7 +41,7 @@
         <?= session()->getFlashdata('error') ?>
     </div>
 <?php endif; ?>
-<div class="container">
+<div class="container" style="background-color:black;">
     <main>
         <?= $this->renderSection('content') ?>
     </main>

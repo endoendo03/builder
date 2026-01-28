@@ -47,7 +47,7 @@ class Diary extends BaseController
                     'diary_id' => $id
                 ]
             ]);
-            $diary = json_decode($response->getBody(), true)['data'];
+            $diary = json_decode($response->getBody(), true)['data'];//var_dump($diary);exit;
         } catch (\Exception $e) {
             return redirect()->to('/diary')->with('error', '記事が見つかりませんでした');
         }

@@ -9,13 +9,17 @@ class Cast extends BaseController
 {
     public function index()
     {
-        // 実際のキャスト一覧取得用API（例）
-        $apiUrl = "https://api.example.com/v1/casts?shop_id=2407";
-        
         $client = \Config\Services::curlrequest();
+        $url = 'https://api.purelovers.com/site_builder/';
 
         try {
-            $response = $client->get($apiUrl);
+            
+            $response = $client->get($url, [
+                'query' => [
+                    'mode' => 'shop_girl_all',
+                    'shop_id' => PURELOVERS_SHOP_ID
+                ]
+            ]);
             $castData = json_decode($response->getBody(), true);
             $casts = $castData['data'] ?? [];
         } catch (\Exception $e) {
