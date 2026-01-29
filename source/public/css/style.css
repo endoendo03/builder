@@ -37,11 +37,70 @@ header {
     justify-content: space-between;
     align-items: center;
 }
-.nav-menu {
+/* --- ベーススタイル --- */
+.header-inner {
     display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+/* --- スマホ用 (768px以下) --- */
+@media (max-width: 768px) {
+    /* 三本線ボタンの表示 */
+    .menu-trigger {
+        display: block;
+        width: 35px; height: 24px;
+        background: none; border: none; cursor: pointer;
+        position: relative; z-index: 100;
+    }
+    .menu-trigger span {
+        position: absolute; left: 0; width: 100%; height: 3px;
+        background: #fff; transition: all 0.3s;
+    }
+    .menu-trigger span:nth-child(1) { top: 0; }
+    .menu-trigger span:nth-child(2) { top: 10px; }
+    .menu-trigger span:nth-child(3) { bottom: 0; }
+
+    /* ボタンがactiveの時の×印 */
+    .menu-trigger.active span:nth-child(1) { transform: translateY(10px) rotate(-45deg); }
+    .menu-trigger.active span:nth-child(2) { opacity: 0; }
+    .menu-trigger.active span:nth-child(3) { transform: translateY(-11px) rotate(45deg); }
+
+    /* メニューを右からスライドイン */
+    .nav-menu {
+        position: fixed; top: 0; right: -100%;
+        width: 70%; height: 100vh;
+        background: #111;
+        flex-direction: column; /* 縦並び */
+        padding-top: 80px;
+        transition: 0.4s;
+        z-index: 90;
+        margin: 0;
+        list-style: none;
+    }
+    .nav-menu.active { right: 0; }
+    .nav-menu li { padding: 15px 20px; border-bottom: 1px solid #333; }
+    
+    .user-welcome { color: #ff0; font-size: 13px; }
+
+    /* 背景を暗くする */
+    .menu-overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.8); display: none; z-index: 80;
+    }
+    .menu-overlay.active { display: block; }
+}
+
+/* --- PC用 (769px以上) --- */
+@media (min-width: 769px) {
+    .menu-trigger { display: none; }
+    .nav-menu {
+        display: flex; /* 横並び */
+        list-style: none;
+        gap: 20px;
+    }
+    .nav-menu li { border: none; }
 }
 .nav-menu li a {
     color: #fff;
@@ -61,19 +120,18 @@ main {
     width: 220px;
 }
 
-/* スマホ対応：992px以下でサイドバーを下に落とす */
-@media (max-width: 992px) {
-    .container { flex-direction: column; }
-    .sidebar-right { width: 100%; order: 2; } /* 本文を先に読ませる */
-    main { order: 1; }
-}
-
-/* --- 写メ日記グリッド --- */
 .diary-grid {
     display: grid;
-    /* 画面幅に合わせてカラム数を自動調整 (4列 → 3列 → 2列) */
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 10px;
+    /* デフォルト（スマホ）は2列固定 */
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/* PC（画面幅が広い時）は4列に上書き */
+@media (min-width: 769px) {
+    .diary-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
 /* --- クーポンカード --- */

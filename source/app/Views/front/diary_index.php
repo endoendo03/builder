@@ -8,11 +8,11 @@
         font-weight: bold;
         margin-bottom: 15px;
     }
-    .diary-grid {
+    /* .diary-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 10px;
-    }
+    } */
     .diary-item {
         background: #111;
         border: 1px solid #333;
