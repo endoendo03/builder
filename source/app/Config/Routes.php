@@ -15,6 +15,7 @@ $routes->get('logout', 'Login::logout');
 
 $routes->get('system/', 'System::index', ['as' => 'System::index']);
 $routes->get('cast', 'Cast::index', ['as' => 'Cast::index']);
+$routes->get('cast/detail/(:num)', 'Cast::detail/$1', ['as' => 'Cast::detail']);
 $routes->get('coupon/', 'Coupon::index', ['as' => 'Coupon::index']);
 $routes->get('diary/', 'Diary::index', ['as' => 'Diary::index']);
 $routes->get('diary/detail/(:num)', 'Diary::detail/$1', ['as' => 'Diary::detail']);
