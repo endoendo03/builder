@@ -87,4 +87,39 @@ class Surveys extends BaseController
 
         return view('admin/surveys/responses', $data);
     }
+    public function publish($id)
+    {
+        $model = new \App\Models\SurveyModel();
+
+        $db = \Config\Database::connect();
+        $db->transStart();
+
+        // 全てのアンケートの公開フラグを0（非公開）にする
+        $model->where('is_published', 1)->set(['is_published' => 0])->update();
+
+        // 指定されたIDのアンケートだけを1（公開）にする
+        $model->update($id, ['is_published' => 1]);
+
+        $db->transComplete();
+
+        if ($db->transStatus() === false) {
+            return redirect()->back()->with('error', '更新に失敗しました。');
+        }
+
+        return redirect()->back()->with('success', 'フロント表示を切り替えました！');
+    }
+    public function delete($id)
+    {
+        $model = new \App\Models\SurveyModel();
+        
+        // 
+        if (!$model->find($id)) {
+            return redirect()->back()->with('error', '対象が見つかりません。');
+        }
+
+        // 
+        $model->delete($id);
+
+        return redirect()->to('/admin/surveys')->with('success', 'アンケートを削除（非表示）にしました。');
+    }
 }

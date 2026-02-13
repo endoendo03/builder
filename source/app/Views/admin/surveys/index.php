@@ -39,10 +39,7 @@
                 <td style="padding: 10px; text-align: center; color: #666;">
                     <?= date('Y/m/d H:i', strtotime($survey['created_at'])) ?>
                 </td>
-                <td style="padding: 10px; text-align: center;">
-                    <a href="<?= url_to('Admin\Surveys::edit', $survey['id']) ?>" style="background: #3498db; color: white; padding: 5px 10px; text-decoration: none; border-radius: 4px; font-size: 0.85em;">設問を編集</a>
-                    <a href="<?= url_to('Admin\Surveys::responses', $survey['id']) ?>" style="background: #6c757d; color: white; padding: 5px 10px; text-decoration: none; border-radius: 4px; font-size: 0.85em; margin-left: 5px;">回答を見る</a>
-                    <button onclick="showQR('<?= url_to('Survey::show', $survey['id']) ?>', '<?= esc($survey['title']) ?>')" style="background: #9b59b6; color: white; padding: 5px 10px; border: none; border-radius: 4px; font-size: 0.85em; cursor: pointer; margin-left: 5px;">
+                <td style="padding: 10px; text-align: center;"><button onclick="showQR('<?= url_to('Survey::show', $survey['id']) ?>', '<?= esc($survey['title']) ?>')" style="background: #9b59b6; color: white; padding: 5px 10px; border: none; border-radius: 4px; font-size: 0.85em; cursor: pointer; margin-left: 5px;">
                         QR表示
                     </button>
 
@@ -67,6 +64,31 @@
                         document.getElementById('qrModal').style.display = 'flex';
                     }
                     </script>
+                    <?php if ($survey['is_published'] == 0): ?>
+                        <p>
+                            <a href="<?= site_url('admin/surveys/publish/' . $survey['id']) ?>" 
+                            class="btn-publish" 
+                            style="background: #3498db; color: #fff; padding: 5px 10px; text-decoration: none; border-radius: 4px; font-size: 0.8em;">
+                                フロントに表示
+                            </a>
+                        </p>
+                    <?php else: ?>
+                        <span>フロント表示中</span>
+                    <?php endif; ?>
+                    <p>
+                        <a href="<?= url_to('Admin\Surveys::edit', $survey['id']) ?>" style="background: #3498db; color: white; padding: 5px 10px; text-decoration: none; border-radius: 4px; font-size: 0.85em;">設問を編集</a>
+                    </p>
+                    <p>
+                        <a href="<?= url_to('Admin\Surveys::responses', $survey['id']) ?>" style="background: #6c757d; color: white; padding: 5px 10px; text-decoration: none; border-radius: 4px; font-size: 0.85em; margin-left: 5px;">回答を見る</a>
+                    </p>
+                    <p>
+                        <a href="<?= site_url('admin/surveys/delete/' . $survey['id']) ?>" 
+                            style="background: #e74c3c; color: white; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-size: 0.85em;"
+                            onclick="return confirm('このアンケートを削除しますか？');">
+                            削除
+                        </a>
+                    </p>
+                    
                 </td>
             </tr>
             <?php endforeach; ?>

@@ -36,6 +36,7 @@
         <ul class="nav-menu" id="nav-menu">
             <li><a href="/system/">料金システム</a></li>
             <li><a href="/cast/">キャスト一覧</a></li>
+            <li><a href="/schedule/">出勤一覧</a></li>
             <li><a href="<?= base_url('diary') ?>">写メ日記</a></li>
 
             <?php if (session()->get('is_user_logged_in')): ?>
@@ -44,6 +45,7 @@
             <?php else: ?>
                 <li><a href="javascript:void(0)" onclick="openLoginModal()" style="color:#ff0;">ログイン / 会員登録</a></li>
             <?php endif; ?>
+            <?= view_cell('\App\Libraries\BannerLibrary::displaySurvey') ?>
         </ul>
     </div>
 </header>

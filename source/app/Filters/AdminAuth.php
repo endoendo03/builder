@@ -8,6 +8,12 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class AdminAuth implements FilterInterface
 {
+    private $notPermissions = [
+        // ロール2（スタッフ）がアクセスできる場所のリスト
+        'staff' => [
+            'Admin\Surveys::index',
+        ],
+    ];
     /**
      * Do whatever processing this filter needs to do.
      * By default it should not return anything during
@@ -27,6 +33,20 @@ class AdminAuth implements FilterInterface
     {
         if (! session()->get('is_logged_in')) {
             return redirect()->to(url_to('Admin\Login::index'));
+        }
+
+        $router = service('router');
+        $currentAction = $router->controllerName() . '::' . $router->methodName();
+        
+        $currentAction = str_replace('App\Controllers\\', '', $currentAction);
+        $role = session()->get('admin_role');
+
+        // 管理者(1)は何でもOK、スタッフ(2)は許可リストにあるかチェック
+        if ($role != 'admin') {
+            $permissions = $this->permissions[$role] ?? [];
+            if (in_array($currentAction, $permissions)) {
+                return redirect()->to('/admin/dashboard')->with('error', 'その操作を行う権限がありません。');
+            }
         }
     }
 

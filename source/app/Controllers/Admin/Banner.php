@@ -9,9 +9,74 @@ class Banner extends BaseController
 {
     protected $bannerModel;
 
+    private $bannerSettings = [
+        'top_pc' => [
+            'label' => 'TOPバナー(PC)',
+            'limit' => 5,
+            'desc'  => '推奨: 1920x600'
+        ],
+        'top_sp' => [
+            'label' => 'TOPバナー(SP)',
+            'limit' => 5,
+            'desc'  => '推奨: 800x800'
+        ],
+        'right_column' => [
+            'label' => '右カラム',
+            'limit' => 5,
+            'desc'  => '推奨: 300x250'
+        ],
+        'render_shop' => [
+            'label' => '系列店バナー',
+            'limit' => 6,
+            'desc'  => '系列店バナー'
+        ],
+    ];
+
     public function __construct()
     {
         $this->bannerModel = new BannerModel();
+    }
+public function index()
+    {
+        $model = new BannerModel();
+        
+        // placeごとにグループ化して取得
+        $allBanners = $model->orderBy('sort_order', 'ASC')->findAll();
+        $bannersByPlace = [];
+        foreach ($allBanners as $b) {
+            $bannersByPlace[$b['place']][] = $b;
+        }
+
+        return view('admin/banner/index', [
+            'title'    => 'バナー管理',
+            'settings' => $this->bannerSettings,
+            'banners'  => $bannersByPlace
+        ]);
+    }
+
+    /**
+     * 新規登録画面（どの枠か place をクエリパラメータで受け取る）
+     */
+    public function new()
+    {
+        $place = $this->request->getGet('place');
+
+        // 定義にないplaceや、枚数オーバーをチェック
+        if (!isset($this->bannerSettings[$place])) {
+            return redirect()->to('/admin/banner')->with('error', '無効な場所です。');
+        }
+
+        $model = new BannerModel();
+        $currentCount = $model->where('place', $place)->countAllResults();
+
+        if ($currentCount >= $this->bannerSettings[$place]['limit']) {
+            return redirect()->to('/admin/banner')->with('error', 'これ以上登録できません。');
+        }
+
+        return view('admin/banner/new', [
+            'place' => $place,
+            'info'  => $this->bannerSettings[$place]
+        ]);
     }
 
     /**
@@ -103,5 +168,36 @@ class Banner extends BaseController
         $this->bannerModel->delete($id);
 
         return redirect()->to('/admin/banner/top_index')->with('success', 'バナーを削除しました。');
+    }
+
+    public function update_place()
+    {
+        $place = $this->request->getPost('place'); 
+        $file  = $this->request->getFile('image');
+
+        if ($file->isValid() && !$file->hasMoved()) {
+            $newName = $file->getRandomName();
+            $file->move(FCPATH . 'uploads/banners', $newName);
+            $path = 'uploads/banners/' . $newName;
+
+            // DBにすでにあるかチェックして保存（updateOrInsert的な動き）
+            $model = new \App\Models\BannerModel();
+            $existing = $model->where('place', $place)->first();
+
+            $data = [
+                'place'      => $place,
+                'title'      => $this->request->getPost('title'),
+                'image_path' => $path,
+                'alt_text'   => $this->request->getPost('alt_text'),
+                'link_url'   => $this->request->getPost('link_url'),
+            ];
+
+            if ($existing) {
+                $model->update($existing['id'], $data);
+            } else {
+                $model->insert($data);
+            }
+        }
+        return redirect()->back()->with('success', 'バナーを更新しました！');
     }
 }

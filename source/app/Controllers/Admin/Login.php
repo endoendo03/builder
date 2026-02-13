@@ -25,6 +25,7 @@ class Login extends BaseController
             $session->set([
                 'admin_id'   => $admin['id'],
                 'admin_name' => $admin['username'],
+                'admin_role' => $admin['role'],
                 'is_logged_in' => true,
             ]);
             return redirect()->to(url_to('Admin\Dashboard::index'));

@@ -17,6 +17,7 @@ $routes->get('system/', 'System::index', ['as' => 'System::index']);
 $routes->get('cast', 'Cast::index', ['as' => 'Cast::index']);
 $routes->get('cast/detail/(:num)', 'Cast::detail/$1', ['as' => 'Cast::detail']);
 $routes->get('coupon/', 'Coupon::index', ['as' => 'Coupon::index']);
+$routes->get('schedule', 'Schedule::index', ['as' => 'Schedule::index']);
 $routes->get('diary/', 'Diary::index', ['as' => 'Diary::index']);
 $routes->get('diary/detail/(:num)', 'Diary::detail/$1', ['as' => 'Diary::detail']);
 
@@ -37,6 +38,11 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ad
 {
     $routes->get('/', 'Dashboard::index');
 
+    $routes->get('banner/index', 'Banner::index', ['as' => 'Admin\Banner::index']);
+    $routes->get('banner/new', 'Banner::new', ['as' => 'Admin\Banner::new']);
+    $routes->post('banner/top_store', 'Banner::top_store', ['as' => 'Admin\Banner::top_store']);
+    $routes->get('banner/top_delete/(:num)', 'Banner::top_delete/$1', ['as' => 'Admin\Banner::top_delete']);
+
     $routes->get('banner/top_index', 'Banner::top_index', ['as' => 'Admin\Banner::top_index']);
     $routes->get('banner/top_new', 'Banner::top_new', ['as' => 'Admin\Banner::top_new']);
     $routes->post('banner/top_store', 'Banner::top_store', ['as' => 'Admin\Banner::top_store']);
@@ -56,6 +62,8 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ad
     $routes->get('surveys/new', 'Surveys::new', ['as' => 'Admin\Surveys::new']);
     $routes->post('surveys/create', 'Surveys::create', ['as' => 'Admin\Surveys::create']);
     $routes->get('surveys/edit/(:num)', 'Surveys::edit/$1', ['as' => 'Admin\Surveys::edit']);
+    $routes->get('surveys/delete/(:num)', 'Surveys::delete/$1', ['as' => 'Admin\Surveys::delete']);
+    $routes->get('surveys/publish/(:num)', 'Surveys::publish/$1', ['as' => 'Admin\Surveys::publish']);
     $routes->post('surveys/add_question/(:num)', 'Surveys::addQuestion/$1', ['as' => 'Admin\Surveys::addQuestion']);
     $routes->get('surveys/delete_question/(:num)', 'Surveys::deleteQuestion/$1', ['as' => 'Admin\Surveys::deleteQuestion']);
     $routes->get('surveys/responses/(:num)', 'Surveys::responses/$1', ['as' => 'Admin\Surveys::responses']);

@@ -5,6 +5,8 @@ namespace App\Controllers;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use App\Models\Banners;
+use App\Models\Surveys;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -39,7 +41,16 @@ abstract class BaseController extends Controller
         // Caution: Do not edit this line.
         parent::initController($request, $response, $logger);
 
-        // Preload any models, libraries, etc, here.
-        // $this->session = service('session');
+        // $bannerModel = new \App\Models\BannerModel();
+        // $surveyModel = new \App\Models\ServeyModel();
+        // // 全ビューで $commonBanners として使えるように注入
+        // $this->commonData = [
+        //     'headerBannersPc' => $bannerModel->where('place', 'top_pc')->findAll(),
+        //     'headerBannersSp' => $bannerModel->where('place', 'top_sp')->findAll(),
+        //     'headerBannersRight' => $bannerModel->where('place', 'right_column')->findAll(),
+        //     'headerBannersRenderShop' => $bannerModel->where('place', 'render_shop')->findAll(),
+        //     'published_servey' => $surveyModel->where('is_published', 1)->first(),
+        //     'siteTitle'     => '人妻レンタル公式',
+        // ];
     }
 }

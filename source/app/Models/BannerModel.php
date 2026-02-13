@@ -15,8 +15,8 @@ class BannerModel    extends Model
     protected $allowedFields = [
         'title',
         'alt_text',
-        'pc_image_path',
-        'sp_image_path',
+        'image_path',
+        'place',
         'link_url',
         'sort_order',
         'is_visible'
