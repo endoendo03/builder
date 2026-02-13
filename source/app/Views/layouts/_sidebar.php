@@ -25,7 +25,7 @@ $admin_name = session()->get('admin_name') ?? '管理者';
         </li>
 
         <li class="menu-item <?= (strpos($current_route, 'Admin\Banner') !== false) ? 'active' : '' ?>">
-            <a href="<?= url_to('Admin\Banner::top_index') ?>">
+            <a href="<?= url_to('Admin\Banner::index') ?>">
                 <span class="icon">🖼️</span> バナー管理
             </a>
         </li>
