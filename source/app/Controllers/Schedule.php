@@ -23,7 +23,7 @@ class Schedule extends BaseController
                 ]
             ]);
             $castData = json_decode($response->getBody(), true);
-            $casts = $castData['data'] ?? [];var_dump($casts);exit;
+            $casts = $castData['data'] ?? [];
         } catch (\Exception $e) {
             $casts = [];
         }
