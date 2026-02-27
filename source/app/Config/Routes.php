@@ -5,10 +5,11 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index');
+$routes->get('/', 'Index::index');
 if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
+$routes->get('top/', 'Index::top', ['as' => 'Index::top']);
 
 $routes->post('login/auth', 'Login::auth');
 $routes->get('logout', 'Login::logout');
@@ -62,6 +63,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ad
     $routes->get('surveys/new', 'Surveys::new', ['as' => 'Admin\Surveys::new']);
     $routes->post('surveys/create', 'Surveys::create', ['as' => 'Admin\Surveys::create']);
     $routes->get('surveys/edit/(:num)', 'Surveys::edit/$1', ['as' => 'Admin\Surveys::edit']);
+    $routes->post('surveys/update/(:num)', 'Surveys::update/$1', ['as' => 'Admin\Surveys::update']);
     $routes->get('surveys/delete/(:num)', 'Surveys::delete/$1', ['as' => 'Admin\Surveys::delete']);
     $routes->get('surveys/publish/(:num)', 'Surveys::publish/$1', ['as' => 'Admin\Surveys::publish']);
     $routes->post('surveys/add_question/(:num)', 'Surveys::addQuestion/$1', ['as' => 'Admin\Surveys::addQuestion']);

@@ -11,7 +11,7 @@ class Surveys extends BaseController
         $model = new \App\Models\SurveyModel();
         $data = [
             'page_title' => 'アンケート管理',
-            'surveys'    => $model->orderBy('id', 'desc')->findAll(),
+            'surveys'    => $model->orderBy('sort_order', 'ASC')->findAll(),
         ];
         return view('admin/surveys/index', $data);
     }
@@ -19,12 +19,25 @@ class Surveys extends BaseController
     public function create()
     {
         $model = new \App\Models\SurveyModel();
-        $model->insert([
-            'title'       => $this->request->getPost('title'),
-            'status'      => 'open',
-            'created_at'  => date('Y-m-d H:i:s'),
-        ]);
-        return redirect()->to(url_to('Admin\Surveys::index'));
+        $title = $this->request->getPost('title');
+
+        if (empty($title)) {
+            return redirect()->back()->with('error', 'タイトルを入力してください。');
+        }
+        $minOrder = $model->selectMin('sort_order')->first();
+        $newOrder = (isset($minOrder['sort_order'])) ? $minOrder['sort_order'] - 1 : 0;
+
+        $data = [
+            'title'      => $title,
+            // 'status'     => 'stop',
+            'sort_order' => $newOrder,
+        ];
+
+        if ($model->insert($data)) {
+            return redirect()->to('/admin/surveys')->with('success', '新規アンケートを作成しました。');
+        } else {
+            return redirect()->back()->with('error', '作成に失敗しました。');
+        }
     }
 
     // 編集画面（ここで設問も管理する）
@@ -121,5 +134,50 @@ class Surveys extends BaseController
         $model->delete($id);
 
         return redirect()->to('/admin/surveys')->with('success', 'アンケートを削除（非表示）にしました。');
+    }
+
+    public function update($id)
+    {
+        $model = new \App\Models\SurveyModel();
+
+        // バリデーション（タイトル必須）
+        if (!$this->validate(['title' => 'required|min_length[3]'])) {
+            return redirect()->back()->withInput()->with('error', 'タイトルを正しく入力してください。');
+        }
+
+        $data = [
+            'title' => $this->request->getPost('title'),
+            // 必要ならここでtypeなども更新対象に含める
+        ];
+
+        if ($model->update($id, $data)) {
+            return redirect()->to('/admin/surveys')->with('success', 'アンケート名を更新しました！');
+        } else {
+            return redirect()->back()->with('error', '更新に失敗しました。');
+        }
+    }
+    public function reorder()
+    {
+        $json = $this->request->getJSON();
+        $ids = $json->ids;
+
+        if (empty($ids)) {
+            return $this->response->setJSON(['status' => 'error']);
+        }
+
+        $model = new \App\Models\SurveyModel();
+        
+        // トランザクションで一気に更新
+        $db = \Config\Database::connect();
+        $db->transStart();
+
+        foreach ($ids as $index => $id) {
+            // 
+            $model->update($id, ['sort_order' => $index]);
+        }
+
+        $db->transComplete();
+
+        return $this->response->setJSON(['status' => 'success']);
     }
 }

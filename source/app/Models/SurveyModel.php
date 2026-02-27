@@ -12,7 +12,7 @@ class SurveyModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['title','description', 'is_published'];
+    protected $allowedFields    = ['title','description', 'is_published', 'sort_order'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
