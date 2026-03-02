@@ -32,11 +32,11 @@
 <div class="coupon-list">
     <?php foreach ($coupons as $coupon): ?>
     <div class="coupon-card">
-        <div class="coupon-expire">有効期限：<?= esc($coupon['end_date']) ?> まで</div>
-        <div class="coupon-name"><?= esc($coupon['title']) ?></div>
+        <div class="coupon-expire">有効期限：<?= esc($coupon['expire_date']) ?> まで</div>
+        <div class="coupon-name"><?= esc($coupon['name']) ?></div>
         
         <?php if ($is_logged_in): ?>
-            <button class="use-btn" onclick="showCouponCode('<?= esc($coupon['title']) ?>', '<?= esc($coupon['code']) ?>')">
+            <button class="use-btn" onclick="showCouponCode('<?= esc($coupon['name']) ?>', '<?= esc($coupon['code']) ?>')">
                 クーポンを利用する
             </button>
         <?php else: ?>

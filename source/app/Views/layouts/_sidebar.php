@@ -23,6 +23,12 @@ $admin_name = session()->get('admin_name') ?? '管理者';
                 <span class="icon">📊</span> ダッシュボード
             </a>
         </li>
+        
+        <li class="menu-item <?= (strpos($current_route, 'admin_settings') !== false) ? 'active' : '' ?>">
+            <a href="<?= url_to('admin_settings_index') ?>">
+                <span class="icon">⚙️</span> サイト基本設定
+            </a>
+        </li>
 
         <li class="menu-item <?= (strpos($current_route, 'Admin\Banner') !== false) ? 'active' : '' ?>">
             <a href="<?= url_to('Admin\Banner::index') ?>">

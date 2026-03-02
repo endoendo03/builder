@@ -30,13 +30,19 @@ class Banner extends BaseController
             'limit' => 6,
             'desc'  => '系列店バナー'
         ],
+        'top_main' => [
+            'label' => 'TOPページメインカラム',
+            'limit' => 10,
+            'desc'  => 'TOPページメインカラム'
+        ],
     ];
 
     public function __construct()
     {
         $this->bannerModel = new BannerModel();
     }
-public function index()
+
+    public function index()
     {
         $model = new BannerModel();
         
@@ -79,95 +85,55 @@ public function index()
         ]);
     }
 
-    /**
-     * TOPバナー一覧
-     */
-    public function top_index()
+    public function create()
     {
+        $model = new \App\Models\BannerModel();
+
+        // 1. バリデーション設定
+        $validationRule = [
+            'title' => 'required|min_length[3]',
+            'image' => [
+                'label' => 'Image File',
+                'rules' => 'uploaded[image]'
+                        . '|is_image[image]'
+                        . '|mime_in[image,image/jpg,image/jpeg,image/gif,image/png]'
+                        . '|max_size[image,4096]', // 最大4MB
+            ],
+        ];
+
+        if (!$this->validate($validationRule)) {
+            return redirect()->back()->withInput()->with('error', '入力内容または画像を確認してください。');
+        }
+
+        // 2. 画像ファイルの処理
+        $img = $this->request->getFile('image');
+        
+        if (!$img->hasMoved()) {
+            // public/uploads/banners フォルダにランダムな名前で保存
+            $newName = $img->getRandomName();
+            $img->move(ROOTPATH . 'public/uploads/banners', $newName);
+            
+            // DBに保存するパスを作成
+            $imagePath = 'uploads/banners/' . $newName;
+        } else {
+            return redirect()->back()->with('error', '画像のアップロードに失敗しました。');
+        }
+
+        // 3. DBへの保存データ作成
         $data = [
-            'title'   => 'TOPバナー管理',
-            'banners' => $this->bannerModel->orderBy('sort_order', 'ASC')->findAll(),
-        ];
-        return view('admin/banner/top_index', $data);
-    }
-
-    /**
-     * TOPバナー新規登録画面
-     */
-    public function top_new()
-    {
-        // 現在の枚数チェック
-        if ($this->bannerModel->countAllResults() >= 5) {
-            return redirect()->to('/admin/banner/top_index')->with('error', 'バナーは最大5枚までです。');
-        }
-
-        return view('admin/banner/top_new', ['title' => 'TOPバナー新規登録']);
-    }
-
-    /**
-     * TOPバナー保存処理
-     */
-    public function top_store()
-    {
-        // 1. バリデーション
-        $rules = [
-            'title'    => 'required|max_length[255]',
-            // 'pc_image' => 'uploaded[pc_image]|is_image[pc_image]|max_size[pc_image,20480]',
-            // 'sp_image' => 'uploaded[sp_image]|is_image[sp_image]|max_size[sp_image,20480]',
-            'alt_text' => 'required',
+            'place'      => $this->request->getPost('place'),
+            'title'      => $this->request->getPost('title'),
+            'image_path' => $imagePath,
+            'link_url'   => $this->request->getPost('link_url'),
+            'alt_text'   => $this->request->getPost('alt_text'),
+            'sort_order' => 0, // 必要なら最小値-1ロジックをここにも
         ];
 
-        if (!$this->validate($rules)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        if ($model->insert($data)) {
+            return redirect()->to('/admin/banner/index')->with('success', 'バナーを登録しました！');
+        } else {
+            return redirect()->back()->with('error', 'DB保存に失敗しました。');
         }
-
-        // 2. 枚数制限（念のための二重チェック）
-        if ($this->bannerModel->countAllResults() >= 5) {
-            return redirect()->to('/admin/banner/top_index')->with('error', 'バナーは最大5枚までです。');
-        }
-
-        // 3. 画像アップロード処理
-        $pcFile = $this->request->getFile('pc_image');
-        $spFile = $this->request->getFile('sp_image');
-
-        $pcName = $pcFile->getRandomName();
-        $spName = $spFile->getRandomName();
-
-        // public/uploads/banners に保存
-        $pcFile->move(FCPATH . 'uploads/banners/', $pcName);
-        $spFile->move(FCPATH . 'uploads/banners/', $spName);
-
-        // 4. DB保存
-        $this->bannerModel->save([
-            'title'         => $this->request->getPost('title'),
-            'alt_text'      => $this->request->getPost('alt_text'),
-            'link_url'      => $this->request->getPost('link_url'),
-            'pc_image_path' => 'uploads/banners/' . $pcName,
-            'sp_image_path' => 'uploads/banners/' . $spName,
-            'sort_order'    => $this->request->getPost('sort_order') ?? 0,
-            'is_visible'    => 1,
-        ]);
-
-        return redirect()->to('/admin/banner/top_index')->with('success', 'バナーを登録しました。');
-    }
-
-    /**
-     * TOPバナー削除
-     */
-    public function top_delete($id = null)
-    {
-        $banner = $this->bannerModel->find($id);
-        if (!$banner) {
-            return redirect()->to('/admin/banner/top_index')->with('error', 'データが見つかりません。');
-        }
-
-        // 物理ファイルの削除
-        if (file_exists(FCPATH . $banner['pc_image_path'])) unlink(FCPATH . $banner['pc_image_path']);
-        if (file_exists(FCPATH . $banner['sp_image_path'])) unlink(FCPATH . $banner['sp_image_path']);
-
-        $this->bannerModel->delete($id);
-
-        return redirect()->to('/admin/banner/top_index')->with('success', 'バナーを削除しました。');
     }
 
     public function update_place()
@@ -199,5 +165,37 @@ public function index()
             }
         }
         return redirect()->back()->with('success', 'バナーを更新しました！');
+    }
+
+    public function reorder()
+    {
+        $ids = $this->request->getJSON(true)['ids'] ?? [];
+        $model = new \App\Models\BannerModel();
+
+        foreach ($ids as $index => $id) {
+            $model->update($id, ['sort_order' => $index]);
+        }
+
+        return $this->response->setJSON(['status' => 'success']);
+    }
+
+    public function delete($id)
+    {
+        $model = new \App\Models\BannerModel();
+        $banner = $model->find($id);
+
+        if ($banner) {
+            // サーバー上の画像ファイルを削除
+            $filePath = ROOTPATH . 'public/' . $banner['image_path'];
+            if (is_file($filePath)) {
+                unlink($filePath);
+            }
+
+            // DBレコードを削除
+            $model->delete($id);
+            return redirect()->back()->with('success', 'バナーを削除しました。');
+        }
+
+        return redirect()->back()->with('error', 'バナーが見つかりませんでした。');
     }
 }

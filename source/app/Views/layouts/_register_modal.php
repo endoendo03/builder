@@ -1,35 +1,24 @@
 <div id="registerModal" class="custom-modal-overlay" onclick="closeRegisterModalOutside(event)">
-    <div class="custom-modal-content">
-        <div class="custom-modal-header">
+    <div class="modal-box dark"> <div class="custom-modal-header">
             <h3>新規会員登録</h3>
-            <button type="button" onclick="closeRegisterModal()" class="custom-close-btn">&times;</button>
+            <button class="custom-close-btn" onclick="closeRegisterModal()">&times;</button>
         </div>
-
-        <form id="registerForm" action="<?= base_url('register/store') ?>" method="post" class="custom-modal-body">
-            <?= csrf_field() ?>
-            
-            <div class="custom-form-group">
-                <input type="text" name="name" placeholder="ニックネーム" required>
-            </div>
-            
-            <div class="custom-form-group">
-                <input type="email" name="email" placeholder="メールアドレス" required>
-            </div>
-            
-            <div class="custom-form-group">
-                <input type="password" name="password" placeholder="パスワード" required>
-            </div>
-
-            <div class="custom-form-group">
-                <label>誕生日</label>
-                <input type="date" name="birthday" required>
-            </div>
-
-            <button type="submit" class="custom-submit-btn">登録する</button>
-        </form>
+        <div class="custom-modal-body">
+            <form action="<?= base_url('register/store') ?>" method="post">
+                <?= csrf_field() ?>
+                <div class="custom-form-group">
+                    <label class="sh-label">メールアドレス</label>
+                    <input type="email" name="email" class="sh-input" required>
+                </div>
+                <div class="custom-form-group">
+                    <label class="sh-label">パスワード</label>
+                    <input type="password" name="password" class="sh-input" required>
+                </div>
+                <button type="submit" class="custom-submit-btn">規約に同意して登録</button>
+            </form>
+        </div>
     </div>
 </div>
-
 <script>
 // モーダルを開く
 function openRegisterModal() {

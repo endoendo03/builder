@@ -7,6 +7,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\Banners;
 use App\Models\Surveys;
+use App\Models\SettingModel;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -28,6 +29,7 @@ abstract class BaseController extends Controller
      */
 
     // protected $session;
+    protected $settings;
 
     /**
      * @return void
@@ -40,17 +42,20 @@ abstract class BaseController extends Controller
 
         // Caution: Do not edit this line.
         parent::initController($request, $response, $logger);
+        
+        $settingModel = new \App\Models\SettingModel();
+        $dbSettings = $settingModel->getKeyValuePairs();
 
-        // $bannerModel = new \App\Models\BannerModel();
-        // $surveyModel = new \App\Models\ServeyModel();
-        // // 全ビューで $commonBanners として使えるように注入
-        // $this->commonData = [
-        //     'headerBannersPc' => $bannerModel->where('place', 'top_pc')->findAll(),
-        //     'headerBannersSp' => $bannerModel->where('place', 'top_sp')->findAll(),
-        //     'headerBannersRight' => $bannerModel->where('place', 'right_column')->findAll(),
-        //     'headerBannersRenderShop' => $bannerModel->where('place', 'render_shop')->findAll(),
-        //     'published_servey' => $surveyModel->where('is_published', 1)->first(),
-        //     'siteTitle'     => '人妻レンタル公式',
-        // ];
+        $defaultSettings = [
+            'shop_name' => '人妻レンタル NTR 仙台店',
+            'shop_tel'  => '022-722-6166',
+            'display_attendance' => '0',
+            'display_raw_video'  => '0',
+        ];
+
+        // DBの設定をデフォルト値に上書き合体させる
+        $this->settings = array_merge($defaultSettings, $dbSettings);
+
+        \Config\Services::renderer()->setVar('site_settings', $this->settings);
     }
 }

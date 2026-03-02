@@ -38,16 +38,14 @@ $routes->get('admin/logout', 'Admin\Login::logout', ['as' => 'Admin\Login::logou
 $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'adminAuth'], function($routes)
 {
     $routes->get('/', 'Dashboard::index');
+    $routes->get('settings', 'Settings::index', ['as' => 'admin_settings_index']);
+    $routes->post('settings/update', 'Settings::update', ['as' => 'admin_settings_update']);
 
     $routes->get('banner/index', 'Banner::index', ['as' => 'Admin\Banner::index']);
     $routes->get('banner/new', 'Banner::new', ['as' => 'Admin\Banner::new']);
-    $routes->post('banner/top_store', 'Banner::top_store', ['as' => 'Admin\Banner::top_store']);
-    $routes->get('banner/top_delete/(:num)', 'Banner::top_delete/$1', ['as' => 'Admin\Banner::top_delete']);
-
-    $routes->get('banner/top_index', 'Banner::top_index', ['as' => 'Admin\Banner::top_index']);
-    $routes->get('banner/top_new', 'Banner::top_new', ['as' => 'Admin\Banner::top_new']);
-    $routes->post('banner/top_store', 'Banner::top_store', ['as' => 'Admin\Banner::top_store']);
-    $routes->get('banner/top_delete/(:num)', 'Banner::top_delete/$1', ['as' => 'Admin\Banner::top_delete']);
+    $routes->post('banner/create', 'Banner::create', ['as' => 'Admin\Banner::create']);
+    $routes->get('banner/delete/(:num)', 'Banner::delete/$1', ['as' => 'Admin\Banner::delete']);
+    $routes->post('banner/reorder', 'Banner::reorder', ['as' => 'Admin\Banner::reorder']);
 
     $routes->get('users', 'Users::index', ['as' => 'Admin\Users::index']);
     $routes->get('users/edit/(:num)', 'Users::edit/$1', ['as' => 'Admin\Users::edit']);
@@ -69,5 +67,6 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ad
     $routes->post('surveys/add_question/(:num)', 'Surveys::addQuestion/$1', ['as' => 'Admin\Surveys::addQuestion']);
     $routes->get('surveys/delete_question/(:num)', 'Surveys::deleteQuestion/$1', ['as' => 'Admin\Surveys::deleteQuestion']);
     $routes->get('surveys/responses/(:num)', 'Surveys::responses/$1', ['as' => 'Admin\Surveys::responses']);
+    $routes->post('surveys/reorder', 'Surveys::reorder', ['as' => 'Admin\Surveys::reorder']);
 
 });

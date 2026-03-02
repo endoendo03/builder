@@ -35,6 +35,7 @@
 
         <ul class="nav-menu" id="nav-menu">
             <li><a href="/system/">料金システム</a></li>
+            <li><a href="/coupon/">クーポン</a></li>
             <li><a href="/cast/">キャスト一覧</a></li>
             <li><a href="/schedule/">出勤一覧</a></li>
             <li><a href="<?= base_url('diary') ?>">写メ日記</a></li>
@@ -55,7 +56,18 @@
         <?= session()->getFlashdata('message') ?>
     </div>
 <?php endif; ?>
+<?php
+    // 現在のページがTOP（Home）かどうかを判定
+    $uri = service('uri');
+    $isHome = ($uri->getSegment(1) == '' || $uri->getSegment(1) == 'index');
+?>
 
+<?php if ($isHome): ?>
+    <section class="main-visual">
+        <?= view_cell('\App\Libraries\BannerLibrary::display', ['place' => 'top_pc']) ?>
+        <?= view_cell('\App\Libraries\BannerLibrary::display', ['place' => 'top_sp']) ?>
+    </section>
+<?php endif; ?>
 <?php if (session()->getFlashdata('error')): ?>
     <div style="background: #e74c3c; color: white; padding: 10px; text-align: center; font-size: 12px;">
         <?= session()->getFlashdata('error') ?>
@@ -65,14 +77,48 @@
     <main>
         <?= $this->renderSection('content') ?>
     </main>
-
-    <aside class="sidebar-right">
-        <?= $this->include('layouts/_front_sidebar') ?>
-    </aside>
+    
+    <div class="side-content" style="width: 300px;">
+        <?= view('parts/right_column') ?>
+    </div>
 </div>
 <footer>
     Copyright &copy; 人妻レンタル NTR All Rights Reserved.
 </footer>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // PC用バナーの設定
+    const swiperPc = new Swiper('.sh-banner-pc', {
+        loop: true,
+        effect: 'fade', // フェードエフェクト
+        fadeEffect: { crossFade: true },
+        autoplay: {
+            delay: 5000, // 5秒ごとに切り替え
+            disableOnInteraction: false,
+        },
+        speed: 2000, // 切り替わる時のじわっと感（2秒）
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
 
+    // スマホ用バナーの設定
+    const swiperSp = new Swiper('.sh-banner-sp', {
+        loop: true,
+        autoplay: {
+            delay: 4000,
+            disableOnInteraction: false,
+        },
+        speed: 1000,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
+});
+</script>
 </body>
 </html>

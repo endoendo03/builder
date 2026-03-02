@@ -79,4 +79,4 @@ defined('EXIT__AUTO_MIN')      || define('EXIT__AUTO_MIN', 9);      // lowest au
 defined('EXIT__AUTO_MAX')      || define('EXIT__AUTO_MAX', 125);    // highest automatically-assigned error code
 
 
-define('PURELOVERS_SHOP_ID', 13207);
+define('PURELOVERS_SHOP_ID', 2407);

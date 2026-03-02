@@ -11,9 +11,9 @@ class Coupon extends BaseController
     public function index()
     {
         $model = new CouponModel();
-        
+        $today = date('Y-m-d');
         // 管理画面で作ったクーポンを取得
-        $coupons = $model->where('status', 'active')
+        $coupons = $model->where('status', '1')->where('expire_date >=', "{$today}")
                          ->orderBy('created_at', 'desc')
                          ->findAll();
 
