@@ -8,7 +8,7 @@
             <img style="width: 100%;" src="/images/top_mov.gif" alt="ドスケベ奥様、濡れ待ち中！">
         </div>
         <div class="pc" style="position: relative;">
-            <img src="/images/top_main-title.png" alt="仙台デリヘル「人妻生レンタル-仙台名物-」">
+            <img src="/images/top_main-title.png" class="u-hidden-sp" alt="仙台デリヘル「人妻生レンタル-仙台名物-」">
             <img style="width: 100%;" src="/images/top_main.jpg" alt="他人の妻がホテルやご自宅に入るなり、即チ◯ポを欲しがる姿を。「硬くて大きいのが欲しいの！」「すごく美味しいのぉ〜」とエロイ言葉を発する奥様の膣穴から、クチュクチュと垂れるマン汁・・・そして、姉妻レンタル始動！！ルックス＆スタイルは勿論の事、礼儀正しい女の子のご案内も可能です！！">
         </div>
         <?php if (!empty($attendance)): ?>
