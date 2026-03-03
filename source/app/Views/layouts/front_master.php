@@ -23,8 +23,8 @@
     </script>
 </head>
 <body>
-<?= $this->include('layouts/_register_modal') ?>
 <?= $this->include('layouts/_login_modal') ?>
+<?= $this->include('layouts/_register_modal') ?>
 <header class="site-header">
     <div class="header-inner">
         <img src="/images/logo_1727263371.png" alt="LOGO" style="height: 50px;">
@@ -119,6 +119,31 @@ document.addEventListener('DOMContentLoaded', function() {
         },
     });
 });
+
+    function openLoginModal() {
+        document.getElementById('loginModal').style.display = 'flex';
+    }
+
+    function closeLoginModal() {
+        document.getElementById('loginModal').style.display = 'none';
+    }
+
+    // 登録モーダルへの切り替え
+    function openRegisterFromLogin() {
+        closeLoginModal();
+        document.getElementById('registerModal').style.display = 'flex';
+    }
+
+    function closeRegisterModal() {
+        document.getElementById('registerModal').style.display = 'none';
+    }
+
+    // 外側をクリックしたら閉じる（共通）
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal-overlay')) {
+            event.target.style.display = 'none';
+        }
+    }
 </script>
 </body>
 </html>

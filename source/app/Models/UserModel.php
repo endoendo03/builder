@@ -14,7 +14,7 @@ class UserModel extends Model
 
     protected $allowedFields = [
     'username', 'email', 'password', 'birthday', 'phone', 
-    'status', 'rank', 'admin_memo' // ★追加
+    'status', 'rank', 'admin_memo', 'token', 'token_expires'
 ];
 
     // タイムスタンプ

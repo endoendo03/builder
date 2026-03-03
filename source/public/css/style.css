@@ -178,35 +178,85 @@ main { flex: 1; min-width: 0; }
 /* ==========================================================================
    5. モーダルシステム（共通化）
    ========================================================================== */
+/* モーダルの土台（オーバーレイ） */
 .custom-modal-overlay {
-    position: fixed; inset: 0;
+    position: fixed;
+    inset: 0;
     background: rgba(0, 0, 0, 0.9);
-    display: none; justify-content: center; align-items: center;
-    z-index: 99999;
+    z-index: 9999; /* ヘッダー(1000)より圧倒的に上 */
+    display: none; /* 基本は非表示 */
+    justify-content: center;
+    align-items: center;
+}
+.custom-modal-overlay.active {
+    display: flex !important;
 }
 
+/* 3. モーダルの白い箱（共通の器） */
 .modal-box {
-    width: 90%; max-width: 420px;
-    border-radius: 8px; overflow: hidden;
-    animation: modalFadeIn 0.3s ease;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    animation: modalFadeIn 0.3s ease; /* じわっと出す */
 }
 
-/* ダークスタイル（登録用） */
-.modal-box.dark {
-    background: #1a1a1a;
-    border: 2px solid var(--primary-red);
-    box-shadow: 0 0 20px rgba(211, 47, 47, 0.4);
-}
-
-/* ライトスタイル（ログイン用） */
+/* 4. スタイル別の着せ替え */
+/* ログイン用（白） */
 .modal-box.light {
     background: #ffffff;
     color: #333;
+    padding: 30px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
 }
 
+/* 会員登録用（黒・赤） */
+.modal-box.dark {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 30px;
+    border: 2px solid #ff0000;
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+}
+
+/* 5. 共通パーツ：入力欄 */
+.sh-input, .minimal-input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box; /* 幅がはみ出さない魔法の1行 */
+    font-size: 16px; /* スマホでズームされないサイズ */
+}
+
+/* ダークモード用の入力欄 */
+.modal-box.dark .sh-input {
+    background: #000;
+    border: 1px solid #444;
+    color: #fff;
+}
+
+/* 6. 共通パーツ：閉じるボタン */
+.custom-close-btn, .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    color: #999;
+    background: none;
+    border: none;
+    padding: 5px;
+}
+
+/* アニメーション */
 @keyframes modalFadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* ==========================================================================

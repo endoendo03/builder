@@ -22,8 +22,15 @@ $routes->get('schedule', 'Schedule::index', ['as' => 'Schedule::index']);
 $routes->get('diary/', 'Diary::index', ['as' => 'Diary::index']);
 $routes->get('diary/detail/(:num)', 'Diary::detail/$1', ['as' => 'Diary::detail']);
 
-$routes->post('register/store/', 'Register::store', ['as' => 'Register::store']);
+$routes->post('register/store', 'Auth::registerStore');
+// $routes->post('register/store/', 'Register::store', ['as' => 'Register::store']);
 
+$routes->post('register', 'Auth::register');
+$routes->get('activate/(:any)', 'Auth::activate/$1');
+$routes->post('login', 'Auth::login');
+
+$routes->post('forgot-password', 'Auth::forgotPassword');
+$routes->get('auth/reset_password/(:any)', 'Auth::resetView/$1');
 // フロント用アンケートURL
 $routes->get('survey/(:num)', 'Survey::show/$1', ['as' => 'Survey::show']);
 $routes->post('survey/submit/(:num)', 'Survey::submit/$1', ['as' => 'Survey::submit']);
