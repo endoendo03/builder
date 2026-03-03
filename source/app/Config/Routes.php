@@ -29,8 +29,10 @@ $routes->post('register', 'Auth::register');
 $routes->get('activate/(:any)', 'Auth::activate/$1');
 $routes->post('login', 'Auth::login');
 
-$routes->post('forgot-password', 'Auth::forgotPassword');
-$routes->get('auth/reset_password/(:any)', 'Auth::resetView/$1');
+$routes->get('forgot-password', 'Auth::forgotPasswordView');
+$routes->post('forgot-password', 'Auth::forgotPasswordStore');
+$routes->get('password/reset/(:any)', 'Auth::passwordResetView/$1');
+$routes->post('password/update', 'Auth::passwordUpdate');
 // フロント用アンケートURL
 $routes->get('survey/(:num)', 'Survey::show/$1', ['as' => 'Survey::show']);
 $routes->post('survey/submit/(:num)', 'Survey::submit/$1', ['as' => 'Survey::submit']);

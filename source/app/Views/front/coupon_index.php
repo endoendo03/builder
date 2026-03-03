@@ -46,27 +46,37 @@
     <?php endforeach; ?>
 </div>
 
-<div id="codeModal" class="modal-overlay" style="display:none;">
-    <div class="modal-content login-style" style="max-width: 400px;">
-        <h3 id="modalCouponTitle" style="margin-bottom: 10px;"></h3>
+<div id="codeModal" class="custom-modal-overlay" onclick="closeCodeModal()">
+    <div class="modal-box light" onclick="event.stopPropagation()">
+        <h3 id="modalCouponTitle" style="margin-bottom: 10px; font-weight: bold;"></h3>
         <p style="font-size: 14px; color: #666;">受付時に以下のコードをご提示ください</p>
         
-        <div style="background: #f8f9fa; border: 2px dashed #333; padding: 20px; margin: 20px 0; font-size: 24px; font-weight: bold; letter-spacing: 3px;">
+        <div style="background: #f8f9fa; border: 2px dashed #333; padding: 20px; margin: 20px 0; font-size: 28px; font-weight: bold; letter-spacing: 3px; color: #d32f2f;">
             <span id="modalCouponCode"></span>
         </div>
         
-        <button onclick="closeCodeModal()" class="submit-btn dark">閉じる</button>
+        <button onclick="closeCodeModal()" class="btn-dark">閉じる</button>
     </div>
 </div>
 
 <script>
-function showCouponCode(title, code) {
-    document.getElementById('modalCouponTitle').innerText = title;
-    document.getElementById('modalCouponCode').innerText = code;
-    document.getElementById('codeModal').style.display = 'flex';
-}
-function closeCodeModal() {
-    document.getElementById('codeModal').style.display = 'none';
-}
+    function showCouponCode(title, code) {
+        document.getElementById('modalCouponTitle').innerText = title;
+        document.getElementById('modalCouponCode').innerText = code;
+        // .active クラスを足して表示
+        document.getElementById('codeModal').classList.add('active');
+    }
+
+    function closeCodeModal() {
+        // .active クラスを外して非表示
+        document.getElementById('codeModal').classList.remove('active');
+    }
+
+    // 枠外クリックで閉じる処理（既にJSファイル側にあれば不要ですが念のため）
+    window.onclick = function(event) {
+        if (event.target.classList.contains('custom-modal-overlay')) {
+            closeCodeModal();
+        }
+    }
 </script>
 <?= $this->endSection() ?>

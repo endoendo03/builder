@@ -52,7 +52,7 @@
 </header>
 <div class="menu-overlay" id="menu-overlay"></div>
 <?php if (session()->getFlashdata('message')): ?>
-    <div style="background: #27ae60; color: white; padding: 10px; text-align: center; font-size: 12px;">
+    <div style="background: #27ae60; color: white; padding: 15px; text-align: center; font-size: 14px; z-index: 10001; position: relative;">
         <?= session()->getFlashdata('message') ?>
     </div>
 <?php endif; ?>
