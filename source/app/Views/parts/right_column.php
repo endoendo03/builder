@@ -1,6 +1,6 @@
 <aside class="right-column">
 
-    <section class="rc-section">
+    <section class="rc-section u-hidden-sp">
         <!-- <h3 class="rc-title">MOBILE PREVIEW</h3> -->
         <div class="rc-banner-wrap mobile-style">
             <?= view_cell('\App\Libraries\BannerLibrary::display', ['place' => 'top_sp']) ?>
