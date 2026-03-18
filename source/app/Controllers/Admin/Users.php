@@ -18,6 +18,10 @@ class Users extends BaseController
         // クエリの作成
         $query = $model;
 
+
+        if (!empty($search['user_id'])) {
+            $query = $query->where('id', $search['user_id']);
+        }
         if (!empty($search['username'])) {
             $query = $query->like('username', $search['username']);
         }

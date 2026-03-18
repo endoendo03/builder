@@ -36,7 +36,21 @@ $routes->post('password/update', 'Auth::passwordUpdate');
 // フロント用アンケートURL
 $routes->get('survey/(:num)', 'Survey::show/$1', ['as' => 'Survey::show']);
 $routes->post('survey/submit/(:num)', 'Survey::submit/$1', ['as' => 'Survey::submit']);
-
+// app/Config/Routes.php に一時的に追加
+// $routes->get('create-staff', function() {
+//     $db = \Config\Database::connect();
+//     $builder = $db->table('admins');
+    
+//     $data = [
+//         'username'   => 'staff_user', // ログイン用ID
+//         'password'   => password_hash('staff1234', PASSWORD_DEFAULT), // ここで安全な暗号に変換！
+//         'role'       => 'staff',      // 権限をスタッフに
+//         'created_at' => date('Y-m-d H:i:s')
+//     ];
+    
+//     $builder->insert($data);
+//     return 'スタッフアカウント（staff_user / staff1234）の作成が完了しました！このルートは削除してね！';
+// });
 // ===============================================
 // ★ 管理画面ルーティング (Admin Group)
 // ===============================================
@@ -59,6 +73,12 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ad
     $routes->get('users', 'Users::index', ['as' => 'Admin\Users::index']);
     $routes->get('users/edit/(:num)', 'Users::edit/$1', ['as' => 'Admin\Users::edit']);
     $routes->post('users/update/(:num)', 'Users::update/$1', ['as' => 'Admin\Users::update']);
+    
+    $routes->get('hotels', 'Hotels::index', ['as' => 'Admin\Hotels::index']);
+    $routes->post('hotels/store', 'Hotels::store', ['as' => 'Admin\Hotels::store']);
+    $routes->get('hotels/delete/(:num)', 'Hotels::delete/$1', ['as' => 'Admin\Hotels::delete']);
+    $routes->get('hotels/edit/(:num)', 'Hotels::edit/$1', ['as' => 'Admin\Hotels::edit']);
+    $routes->post('hotels/update/(:num)', 'Hotels::update/$1', ['as' => 'Admin\Hotels::update']);
 
     $routes->get('coupons', 'Coupons::index', ['as' => 'Admin\Coupons::index']);
     $routes->get('coupons/new', 'Coupons::new', ['as' => 'Admin\Coupons::new']);

@@ -11,7 +11,7 @@ class AdminAuth implements FilterInterface
     private $notPermissions = [
         // ロール2（スタッフ）がアクセスできる場所のリスト
         'staff' => [
-            'Admin\Surveys::index',
+            '\Admin\Surveys::index',
         ],
     ];
     /**
@@ -43,9 +43,9 @@ class AdminAuth implements FilterInterface
 
         // 管理者(1)は何でもOK、スタッフ(2)は許可リストにあるかチェック
         if ($role != 'admin') {
-            $permissions = $this->permissions[$role] ?? [];
+            $permissions = $this->notPermissions[$role] ?? [];
             if (in_array($currentAction, $permissions)) {
-                return redirect()->to('/admin/dashboard')->with('error', 'その操作を行う権限がありません。');
+                return redirect()->to('/admin/')->with('error', 'その操作を行う権限がありません。');
             }
         }
     }

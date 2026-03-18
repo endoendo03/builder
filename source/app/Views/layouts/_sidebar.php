@@ -53,6 +53,11 @@ $admin_name = session()->get('admin_name') ?? '管理者';
                 <span class="icon">📝</span> アンケート管理
             </a>
         </li>
+        <li class="menu-item <?= (strpos($current_route, 'Admin\Hotels') !== false) ? 'active' : '' ?>">
+            <a href="<?= base_url('admin/hotels') ?>">
+                <span class="icon">🏩</span> ホテル管理
+            </a>
+        </li>
 
     </ul>
 

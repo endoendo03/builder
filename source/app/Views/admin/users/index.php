@@ -8,6 +8,10 @@
 <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #dee2e6;">
     <form action="<?= url_to('Admin\Users::index') ?>" method="get" style="display: flex; flex-wrap: wrap; gap: 15px; align-items: flex-end;">
         <div>
+            <label style="display: block; font-size: 0.8em; color: #666;">ID</label>
+            <input type="text" name="user_id" value="<?= esc($search['user_id'] ?? '') ?>" style="padding: 6px; border: 1px solid #ccc; border-radius: 4px;">
+        </div>
+        <div>
             <label style="display: block; font-size: 0.8em; color: #666;">名前</label>
             <input type="text" name="username" value="<?= esc($search['username'] ?? '') ?>" style="padding: 6px; border: 1px solid #ccc; border-radius: 4px;">
         </div>

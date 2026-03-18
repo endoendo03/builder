@@ -147,7 +147,7 @@ class Surveys extends BaseController
 
         $data = [
             'title' => $this->request->getPost('title'),
-            // 必要ならここでtypeなども更新対象に含める
+            'description' => $this->request->getPost('description'),
         ];
 
         if ($model->update($id, $data)) {
