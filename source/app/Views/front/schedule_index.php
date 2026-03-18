@@ -91,29 +91,31 @@
             $startTime = isset($c['schedule'][0]['start']) ? date('H:i', strtotime($c['schedule'][0]['start'])) : '--:--';
             $endTime   = isset($c['schedule'][0]['end'])   ? date('H:i', strtotime($c['schedule'][0]['end']))   : '--:--';
         ?>
-        <div class="cast-card">
-            
-            <?php if ($c['free_now'] === true): ?>
-                <div class="ribbon">即ヒメ</div>
-            <?php endif; ?>
+        <a href="/cast/detail/<?= esc($c['id']) ?>">
+            <div class="cast-card">
+                
+                <?php if ($c['free_now'] === true): ?>
+                    <div class="ribbon">即ヒメ</div>
+                <?php endif; ?>
 
-            <div class="cast-img">
-                <img src="<?= esc($c['thumbnail_url']) ?>" alt="<?= esc($c['name']) ?>">
-            </div>
+                <div class="cast-img">
+                    <img src="<?= esc($c['thumbnail_url']) ?>" alt="<?= esc($c['name']) ?>">
+                </div>
 
-            <div class="cast-info">
-                <div class="time-label">
-                    <span class="today-tag">本日</span> <?= $startTime ?>～<?= $endTime ?>
-                </div>
-                <div class="cast-name">
-                    <?= esc($c['name']) ?> (<?= esc($c['age']) ?>)
-                </div>
-                <div class="cast-size">
-                    <?= esc($c['height']) ?> 
-                    <?= esc($c['bust']) ?>(<?= esc($c['cup']) ?>)/<?= esc($c['waist']) ?>/<?= esc($c['hip']) ?>
+                <div class="cast-info">
+                    <div class="time-label">
+                        <span class="today-tag">本日</span> <?= $startTime ?>～<?= $endTime ?>
+                    </div>
+                    <div class="cast-name">
+                        <?= esc($c['name']) ?> (<?= esc($c['age']) ?>)
+                    </div>
+                    <div class="cast-size">
+                        <?= esc($c['height']) ?> 
+                        <?= esc($c['bust']) ?>(<?= esc($c['cup']) ?>)/<?= esc($c['waist']) ?>/<?= esc($c['hip']) ?>
+                    </div>
                 </div>
             </div>
-        </div>
+        </a>
     <?php endforeach; ?>
 </div>
 

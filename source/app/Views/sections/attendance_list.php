@@ -28,7 +28,7 @@
             <?php endif; ?>
 
             <div class="cast-img">
-                <a href="<?= site_url('cast/' . $c['id']) ?>">
+                <a href="<?= site_url('cast/detail/' . $c['id']) ?>">
                     <img src="<?= esc($c['thumbnail_url']) ?>" alt="<?= esc($c['name']) ?>" loading="lazy">
                 </a>
             </div>
