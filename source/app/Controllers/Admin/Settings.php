@@ -20,7 +20,7 @@ class Settings extends BaseController
         $posts = $this->request->getPost('settings'); // settings[key] = value の形式で受け取る
 
         foreach ($posts as $key => $value) {
-            $model->save([
+            $model->upsert([
                 'key'   => $key,
                 'value' => $value
             ]);

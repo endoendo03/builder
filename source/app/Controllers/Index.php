@@ -50,6 +50,10 @@ class Index extends BaseController
         if (($s['display_exp_manga'] ?? '0') === '1') {
             $data['exp_comic'] = $basicData['ex-comic'] ?? [];
         }
+
+        if(($s['top_free_space'] ?? '') !== '')  {
+            $data['top_free_space'] = $s['top_free_space'];
+        }
         $surveyModel = new \App\Models\SurveyModel();
 
         $data['activeSurvey'] = $surveyModel->where('is_published', 1)->first();

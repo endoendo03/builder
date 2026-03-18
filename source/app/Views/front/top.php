@@ -19,7 +19,13 @@
                 </div>
             </section>
         <?php endif; ?>
-
+        <?php if (!empty($top_free_space)): ?>
+            <div class="free-space-container" style="padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 30px;">
+                
+                <?= $top_free_space ?>
+                
+            </div>
+        <?php endif; ?>
         <?php if (!empty($exp_videos)): ?>
             <section class="top-section">
                 <h2 class="top-title">EXPERIENCE MOVIE<span>体験動画</span></h2>

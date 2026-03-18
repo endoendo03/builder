@@ -36,6 +36,8 @@ $routes->post('password/update', 'Auth::passwordUpdate');
 // フロント用アンケートURL
 $routes->get('survey/(:num)', 'Survey::show/$1', ['as' => 'Survey::show']);
 $routes->post('survey/submit/(:num)', 'Survey::submit/$1', ['as' => 'Survey::submit']);
+// フロント側のルートグループ等に追記
+$routes->get('hotels', 'Hotels::index');
 // app/Config/Routes.php に一時的に追加
 // $routes->get('create-staff', function() {
 //     $db = \Config\Database::connect();

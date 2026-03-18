@@ -1,4 +1,11 @@
 <?= $this->extend('layouts/admin_master') ?>
+<?= $this->section('styles') ?>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<style>
+    /* 管理画面のテイストに合わせる微調整 */
+    .note-editor.note-frame { border: 1px solid #ccc; border-radius: 4px; background: #fff; }
+</style>
+<?= $this->endSection() ?>
 <?= $this->section('content') ?>
 
 <div class="admin-container" style="max-width: 800px; margin: 0 auto; color: #f0f0f0;">
@@ -6,6 +13,18 @@
 
     <form action="<?= url_to('admin_settings_update') ?>" method="post">
         <?= csrf_field() ?>
+
+        <div class="admin-form-group" style="margin-top: 30px;">
+            <label style="font-size: 16px; color: #d32f2f; font-weight: bold;">
+                <i class="fas fa-edit"></i> TOPページ フリースペース (HTML可)
+            </label>
+            <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
+                文字の色を変えたり、画像を挿入したりできます。空欄の場合は表示されません。
+            </p>
+            <textarea name="settings[top_free_space]" id="summernote" class="admin-textarea">
+                <?= htmlspecialchars($settings['top_free_space'] ?? '') ?>
+            </textarea>
+        </div>
 
         <div class="sh-card">
             <h3 class="card-title">店舗情報設定</h3>
@@ -147,5 +166,29 @@
         box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
     }
 </style>
+<?= $this->endSection() ?>
 
+<?= $this->section('scripts') ?>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-ja-JP.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#summernote').summernote({
+            lang: 'ja-JP',           // 日本語化
+            height: 300,             // エディタの高さ
+            placeholder: 'ここにキャンペーン情報やお知らせなどを自由に入力してください...',
+            toolbar: [
+                // 必要なツールボタンだけ残してスッキリさせる
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear', 'color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']] // codeviewでHTML直書きも可能！
+            ]
+        });
+    });
+</script>
 <?= $this->endSection() ?>
