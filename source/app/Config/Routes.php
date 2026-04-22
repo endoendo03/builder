@@ -100,4 +100,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ad
     $routes->get('surveys/responses/(:num)', 'Surveys::responses/$1', ['as' => 'Admin\Surveys::responses']);
     $routes->post('surveys/reorder', 'Surveys::reorder', ['as' => 'Admin\Surveys::reorder']);
 
+    $routes->get('transport_fees', 'TransportFees::index', ['as' => 'Admin\TransportFees::index']);
+    $routes->post('transport_fees/store', 'TransportFees::store', ['as' => 'Admin\TransportFees::store']);
+    $routes->get('transport_fees/delete/(:num)', 'TransportFees::delete/$1', ['as' => 'Admin\TransportFees::delete']);
 });
