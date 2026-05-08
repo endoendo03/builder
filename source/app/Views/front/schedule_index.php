@@ -7,14 +7,16 @@
     body { background-color: #000; color: #fff; margin: 0; font-family: sans-serif; }
     
     .schedule-grid { 
-        display: flex; 
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
         flex-wrap: wrap; 
         gap: 4px; /* 画像の細い赤枠の間隔 */
         padding: 5px; 
     }
     
     .cast-card { 
-        width: calc(33.333% - 5px); /* 3列表示 */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
         background: #f00; /* 枠の色 */
         border: 1px solid #f00; 
         position: relative; 
@@ -79,9 +81,12 @@
         letter-spacing: 0.5px;
     }
 
-    @media (max-width: 600px) {
-        /* スマホなら2列にするなど調整可。今は3列固定 */
+    @media (max-width: 480px) {
+    .schedule-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
     }
+}
 </style>
 <div class="cast-section-title">本日の出勤一覧</div>
 
