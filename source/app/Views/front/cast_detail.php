@@ -1,5 +1,6 @@
 <?= $this->extend('layouts/front_master') ?>
-
+<?= $this->section('title') ?><?= esc($cast['name']) ?>(<?= esc($cast['age']) ?>歳)のプロフィール | 人妻生レンタル仙台店<?= $this->endSection() ?>
+<?= $this->section('description') ?>人妻生レンタル仙台店に在籍する<?= esc($cast['name']) ?>(<?= esc($cast['age']) ?>歳）のプロフィールページです。T<?= esc($cast['height']) ?>、B<?= esc($cast['bust'])・W<?= esc($cast['waist']) ?>・H<?= esc($cast['hip'])。写真や自己紹介、出勤スケジュールはこちらから。仙台市内および近郊へ出張いたします。<?= $this->endSection() ?>
 <?= $this->section('content') ?>
 <div class="detail-container">
     <div class="detail-header">

@@ -1,5 +1,6 @@
 <?= $this->extend('layouts/front_master') ?>
-
+<?= $this->section('title') ?>クーポン・割引情報 | 人妻生レンタル仙台店<?= $this->endSection() ?>
+<?= $this->section('description') ?>【今だけのお得な割引情報を掲載中】仙台・国分町周辺の出張人妻デリヘル「人妻生レンタル仙台店」のクーポンページです。WEB限定クーポンや早割・深夜割など、極上の人妻との癒やしの時間をもっとお得にお楽しみいただけます。<?= $this->endSection() ?>
 <?= $this->section('content') ?>
 <style>
     .coupon-title { background: #d32f2f; padding: 10px 15px; font-weight: bold; margin-bottom: 20px; color: #fff; }

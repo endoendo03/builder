@@ -9,6 +9,15 @@ class Index extends BaseController
 {
     public function index()
     {
+        $agent = $this->request->getUserAgent();
+        if (!$agent->isRobot()) {
+            
+            // 2. 人間で、かつ「年齢認証Cookie」を持っていない場合は認証ページへ飛ばす
+            helper('cookie');
+            if (!get_cookie('is_adult')) {
+                return redirect()->to('age-verification');
+            }
+        }
         $data = [];
         // APIクライアントの準備
         $client = \Config\Services::curlrequest();

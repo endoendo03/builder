@@ -1,9 +1,13 @@
+<?php $siteConfig = config('Site'); // 設定ファイルを読み込み ?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= esc($page_title ?? '人妻レンタル NTR') ?></title>
+    <title>
+        <?= $this->renderSection('title') ?: $siteConfig->siteName . $siteConfig->branchName . ' | ' . $siteConfig->mainArea . 'の出張・デリヘル' ?>
+    </title>
+    <meta name="description" content="<?= $this->renderSection('description') ?: $siteConfig->defaultDescription ?>">
     <link rel="stylesheet" href="<?= base_url('css/style.css') ?>">
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -27,7 +31,7 @@
 <?= $this->include('layouts/_register_modal') ?>
 <header class="site-header">
     <div class="header-inner">
-        <img src="/images/logo_1727263371.png" alt="LOGO" style="height: 50px;">
+        <img src="/images/logo.png" alt="LOGO" style="height: 70px;">
         
         <button class="menu-trigger" id="menu-trigger">
             <span></span><span></span><span></span>

@@ -35,6 +35,7 @@ class Filters extends BaseFilters
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
         'adminAuth' => \App\Filters\AdminAuth::class,
+        'agegate' => \App\Filters\AgeGateFilter::class,
     ];
 
     /**
@@ -73,6 +74,12 @@ class Filters extends BaseFilters
      */
     public array $globals = [
         'before' => [
+            // 'agegate' => ['except' => [
+            //     'admin', 'admin/*',           // 管理画面
+            //     'age-verification', 'verify-age', // 認証ページ自体
+            //     '_toolbar', '_toolbar/*',     // デバッグツールバー
+            //     '__hot-reload'                // 【元凶】ホットリロード通信
+            // ]],
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',

@@ -1,5 +1,6 @@
 <?= $this->extend('layouts/front_master') ?>
-
+<?= $this->section('title') ?>写メ日記・ブログ | 人妻生レンタル仙台店<?= $this->endSection() ?>
+<?= $this->section('description') ?>人妻生レンタル仙台店に在籍するキャストたちの写メ日記・ブログ一覧です。プライベートな日常風景や、セクシーな自撮り写真、本日の出勤前の様子などを日々更新中！女の子たちの素顔や素の性格をぜひ覗いてみてください。<?= $this->endSection() ?>
 <?= $this->section('content') ?>
 <style>
     .diary-section-title {

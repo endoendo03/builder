@@ -1,5 +1,6 @@
 <?= $this->extend('layouts/front_master') ?>
-
+<?= $this->section('title') ?>本日の出勤情報・スケジュール | 人妻生レンタル仙台店<?= $this->endSection() ?>
+<?= $this->section('description') ?>人妻生レンタル仙台店の本日の出勤キャストと待機スケジュールをご案内します。今すぐ呼べる女の子や、事前予約が可能なキャストをリアルタイムで更新中。仙台市内・近郊のホテルやご自宅へ、極上の人妻がすぐにお伺いいたします。<?= $this->endSection() ?>
 <?= $this->section('content') ?>
 <style>
     /* 全体背景 */

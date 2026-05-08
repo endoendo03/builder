@@ -1,5 +1,6 @@
 <?= $this->extend('layouts/front_master') ?>
-
+<?= $this->section('title') ?><?= esc($diary['subject']) ?> - <?= esc($diary['girl_name']) ?>の写メ日記 | 人妻生レンタル仙台店<?= $this->endSection() ?>
+<?= $this->section('description') ?>人妻生レンタル仙台店の<?= esc($diary['girl_name']) ?>が更新した写メ日記<?= esc($diary['subject']) ?>です。仙台の出張デリヘルでお仕事をする人妻の、リアルな日常やプライベートショットを公開中。彼女の素顔をもっと知りたい方はぜひご覧ください。<?= $this->endSection() ?>
 <?= $this->section('content') ?>
 <div class="diary-detail-container">
     <div class="diary-section-title">

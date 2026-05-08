@@ -7,35 +7,68 @@ use CodeIgniter\I18n\Time;
 
 class Auth extends BaseController
 {
-    public function registerStore()
-    {
-        // 1. 入力値の取得
-        $email    = $this->request->getPost('email');
-        $password = $this->request->getPost('password');
-        $birthday = $this->request->getPost('birthday');
 
-        // usernameがNOT NULLなので、とりあえずメールの@前を仮入れ
-        $username = explode('@', $email)[0];
+public function registerStore()
+{
+    // 1. 入力値の取得
+    $email    = $this->request->getPost('email');
+    $password = $this->request->getPost('password');
+    $birthday = $this->request->getPost('birthday');
 
-        $token = bin2hex(random_bytes(32));
-    
-        // DB保存
-        $userModel = new UserModel();
-        $userModel->save([
-            'email'    => $email,
-            'password' => password_hash($password, PASSWORD_DEFAULT),
-            'username' => explode('@', $email)[0],
-            'birthday' => $this->request->getPost('birthday'),
-            'status'   => 'inactive',
-            'token'    => $token,
-            'token_expires' => Time::now()->addHours(24)->toDateTimeString(),
-        ]);
+    // usernameの仮生成
+    $username = explode('@', $email)[0];
+    $token = bin2hex(random_bytes(32));
 
-        // 本登録用のURLを生成
-        $activationUrl = site_url("activate/{$token}");
+    // 2. DB保存
+    $userModel = new \App\Models\UserModel();
+    $userModel->save([
+        'email'    => $email,
+        'password' => password_hash($password, PASSWORD_DEFAULT),
+        'username' => $username,
+        'birthday' => $birthday,
+        'status'   => 'inactive',
+        'token'    => $token,
+        'token_expires' => Time::now()->addHours(24)->toDateTimeString(),
+    ]);
 
-        // 本来はメール送信だが、開発用としてメッセージにURLをブチ込む！
-        return redirect()->to('/')->with('message', "【開発用】メールの代わりにこちらをクリック：<a href='{$activationUrl}'>本登録を完了する</a>");
+    // 3. 本登録用URLの生成
+    $activationUrl = site_url("activate/{$token}");
+
+    // 4. AWS SES経由でのメール送信処理
+    $mailService = \Config\Services::email();
+
+    // SESで検証済みのメールアドレスを指定
+    $mailService->setFrom('info@namaren-sendai.com', '人妻生レンタル仙台店'); 
+    $mailService->setTo($email);
+
+    $mailService->setSubject('【人妻生レンタル】会員登録を完了させてください');
+
+    // 本文の作成
+    $message = <<<EOT
+{$username} 様
+
+「人妻生レンタル仙台店」への会員登録（仮登録）ありがとうございます。
+まだ登録は完了しておりません。
+
+以下のURLをクリックして、24時間以内に本登録を完了させてください。
+
+▼ 本登録を完了する
+{$activationUrl}
+
+※このメールに心当たりのない場合は、お手数ですが破棄をお願いいたします。
+EOT;
+
+        $mailService->setMessage($message);
+
+        // 5. 送信結果による分岐
+        if ($mailService->send()) {
+            // 送信成功：トップページへ戻し、案内メッセージを表示
+            return redirect()->to('/')->with('message', '仮登録メールを送信しました。メール内のURLから本登録を完了させてください。');
+        } else {
+            // 送信失敗：デバッグ情報をログに残してエラー表示
+            log_message('error', $mailService->printDebugger(['headers']));
+            return redirect()->back()->withInput()->with('error', 'メール送信に失敗しました。管理者が確認いたしますのでしばらくお待ちください。');
+        }
     }
 
     private function _sendActivationEmail($to, $token)
@@ -149,5 +182,23 @@ class Auth extends BaseController
         }
 
         return redirect()->to('/')->with('error', 'エラーが発生しました。');
+    }
+
+    public function ageVerificationView()
+    {
+        $model = new \App\Models\SiteSettingModel();
+        // ID:2のデータをViewに渡す
+        $data['tags'] = $model->find(2); 
+        
+        return view('age_verification', $data);
+    }
+
+    public function verifyAge()
+    {
+        // 30日間有効なCookieをセット
+        helper('cookie');
+        // set_cookie('is_adult', '1', 60 * 60 * 24 * 30);
+        
+        return redirect()->to('/')->setCookie('is_adult', '1', 60 * 60 * 24 * 30);
     }
 }

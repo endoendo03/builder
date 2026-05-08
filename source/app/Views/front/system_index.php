@@ -1,5 +1,6 @@
 <?= $this->extend('layouts/front_master') ?>
-
+<?= $this->section('title') ?>料金・出張エリアのご案内 | 人妻生レンタル仙台店（完全明朗会計）<?= $this->endSection() ?>
+<?= $this->section('description') ?>仙台市・近郊対応の出張人妻デリヘル「人妻生レンタル仙台店」の料金案内です。基本セット料金と出張交通費のみのわかりやすいシステム。青葉区・宮城野区など各エリアへの交通費や、延長料金についても詳しく解説しています。<?= $this->endSection() ?>
 <?= $this->section('content') ?>
 <div class="system-page">
     <div class="diary-section-title">料金システム</div>

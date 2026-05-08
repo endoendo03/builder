@@ -11,6 +11,9 @@ if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
 }
 $routes->get('top/', 'Index::top', ['as' => 'Index::top']);
 
+$routes->get('age-verification', 'Auth::ageVerificationView');
+$routes->get('verify-age', 'Auth::verifyAge');
+
 $routes->post('login/auth', 'Login::auth');
 $routes->get('logout', 'Login::logout');
 
@@ -103,4 +106,7 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin', 'filter' => 'ad
     $routes->get('transport_fees', 'TransportFees::index', ['as' => 'Admin\TransportFees::index']);
     $routes->post('transport_fees/store', 'TransportFees::store', ['as' => 'Admin\TransportFees::store']);
     $routes->get('transport_fees/delete/(:num)', 'TransportFees::delete/$1', ['as' => 'Admin\TransportFees::delete']);
+
+    $routes->get('entrance_tags', 'EntranceTags::index', ['as' => 'admin_entrance_tags_index']);
+    $routes->post('entrance_tags/update', 'EntranceTags::update', ['as' => 'admin_entrance_tags_update']);
 });

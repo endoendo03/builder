@@ -63,6 +63,11 @@ $admin_name = session()->get('admin_name') ?? '管理者';
                 <span class="icon">🚙</span> 交通費管理
             </a>
         </li>
+        <li class="menu-item <?= (strpos($current_route, 'Admin\EntranceTags') !== false) ? 'active' : '' ?>">
+            <a href="<?= base_url('admin/entrance_tags') ?>">
+                <span class="icon">🚙</span> 認証ページバナー管理
+            </a>
+        </li>
 
     </ul>
 

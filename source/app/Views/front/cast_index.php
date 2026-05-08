@@ -1,5 +1,6 @@
 <?= $this->extend('layouts/front_master') ?>
-
+<?= $this->section('title') ?>在籍キャスト一覧 | 人妻生レンタル仙台店<?= $this->endSection() ?>
+<?= $this->section('description') ?>人妻生レンタル仙台店に在籍する厳選された人妻キャストの一覧です。清楚系から熟女まで、あなた好みの女性がきっと見つかります。写真やプロフィール、本日の出勤情報をご確認いただけます。<?= $this->endSection() ?>
 <?= $this->section('content') ?>
 <style>
 .cast-section-title {

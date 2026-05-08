@@ -1,5 +1,6 @@
 <?= $this->extend('layouts/front_master') ?>
-
+<?= $this->section('title') ?>周辺のホテル一覧 | 人妻生レンタル仙台店<?= $this->endSection() ?>
+<?= $this->section('description') ?>仙台市内のホテル一覧です。青葉区、宮城野区など各エリアのホテルへお届けにあがります。リストにないホテルやご自宅への出張につきましても、お気軽にご相談ください。<?= $this->endSection() ?>
 <?= $this->section('content') ?>
 <style>
     .page-title { background: #d32f2f; color: #fff; padding: 12px 15px; font-weight: bold; text-align: center; margin-bottom: 20px; font-size: 1.2rem; }
